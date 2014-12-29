@@ -23,6 +23,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x_it.h" 
+#include "YK.h"
 
 
  
@@ -78,6 +79,40 @@ void PendSV_Handler(void)
 void SysTick_Handler(void)
 {
 }
+
+/**
+  * @brief  This function handles USARTy global interrupt request.
+  * @param  None
+  * @retval None
+  */
+void USARTy_IRQHandler(void)
+{
+  if(USART_GetITStatus(USART2, USART_IT_RXNE) != RESET)
+  {
+    /* Read one byte from the receive data register */
+    RxBuffer2[RxCounter2++] = USART_ReceiveData(USART2);
+
+    if(RxCounter2 == NumofRX)
+    {
+      /* Disable the USARTy Receive interrupt */
+      USART_ITConfig(USART2, USART_IT_RXNE, DISABLE);
+    }
+  }
+  
+  if(USART_GetITStatus(USART2, USART_IT_TXE) != RESET)
+  {   
+    /* Write one byte to the transmit data register */
+    USART_SendData(USART2, TxBuffer2[TxCounter2++]);
+
+    if(TxCounter2 == NumofTX)
+    {
+      /* Disable the USARTy Transmit interrupt */
+      USART_ITConfig(USART2, USART_IT_TXE, DISABLE);
+    }    
+  }
+}
+
+
 
 /******************************************************************************/
 /*                 STM32F10x Peripherals Interrupt Handlers                   */

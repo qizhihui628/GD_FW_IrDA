@@ -403,6 +403,11 @@
               <FileType>1</FileType>
               <FilePath>.\system_stm32f10x.c</FilePath>
             </File>
+            <File>
+              <FileName>YK.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\YK.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
