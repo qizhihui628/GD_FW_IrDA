@@ -10,7 +10,7 @@
 //保持寄存器起始地址
 #define REG_HOLDING_START     0x0000
 //保持寄存器数量
-#define REG_HOLDING_NREGS     8
+#define REG_HOLDING_NREGS     9
 
 //线圈起始地址
 #define REG_COILS_START       0x0000
@@ -30,7 +30,7 @@ uint16_t usRegInputBuf[REG_INPUT_NREGS] = {0x0001,0x0002,0x0003,0x0004,0x0005,0x
 uint16_t usRegInputStart = REG_INPUT_START;
 
 //保持寄存器内容
-uint16_t usRegHoldingBuf[REG_HOLDING_NREGS] = {0x1000,0x2000,0x3000,0x4000,0x5000,0x6000,0x7000,0x8000};
+uint16_t usRegHoldingBuf[REG_HOLDING_NREGS] = {0x1000,0x2000,0x3000,0x4000,0x5000,0x6000,0x7000,0x8000,0X9000};
 //保持寄存器起始地址
 uint16_t usRegHoldingStart = REG_HOLDING_START;
 
@@ -40,11 +40,14 @@ uint8_t ucRegCoilsBuf[REG_COILS_SIZE / 8] = {0x00,0x00};
 uint8_t ucRegDiscreteBuf[REG_DISCRETE_SIZE / 8] = {0x00,0x00};
  int main(void)
  {   
+ 	Serial2_Init();
   eMBInit(MB_RTU, 0x01, 0x01, 9600, MB_PAR_NONE); //初始化 RTU模式 从机地址为1 USART1 9600 无校验  
+	Air_Init();
   eMBEnable(); //启动FreeModbus 
   while(1)
 	{ 
 		eMBPoll(); 
+		Air_Poll();
 	}
  }
 
