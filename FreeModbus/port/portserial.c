@@ -48,13 +48,13 @@ vMBPortSerialEnable( BOOL xRxEnable, BOOL xTxEnable )
     //使能接收和接收中断
     USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
     //MAX485操作 低电平为接收模式
-    GPIO_ResetBits(GPIOD,GPIO_Pin_8);
+    GPIO_ResetBits(GPIOA,GPIO_Pin_12);
   }
   else
   {
     USART_ITConfig(USART1, USART_IT_RXNE, DISABLE); 
     //MAX485操作 高电平为发送模式
-    GPIO_SetBits(GPIOD,GPIO_Pin_8);
+    GPIO_SetBits(GPIOA,GPIO_Pin_12);
   }
 
   if(xTxEnable)
@@ -126,12 +126,12 @@ xMBPortSerialInit( UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits, eMBParity e
   NVIC_Init(&NVIC_InitStructure);
   
   //最后配置485发送和接收模式
-  RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD, ENABLE);
+  RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
   //GPIOD.8
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8; 
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12; 
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz; 
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-  GPIO_Init(GPIOD, &GPIO_InitStructure); 
+  GPIO_Init(GPIOA, &GPIO_InitStructure); 
 
   return TRUE;
 }

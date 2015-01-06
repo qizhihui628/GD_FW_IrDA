@@ -2,6 +2,7 @@
 #include "sys.h"
 #include "mb.h"
 #include "mbutils.h"
+#include "T_Sensor.h"
 
 //输入寄存器起始地址
 #define REG_INPUT_START       0x0000
@@ -43,11 +44,13 @@ uint8_t ucRegDiscreteBuf[REG_DISCRETE_SIZE / 8] = {0x00,0x00};
  	Serial2_Init();
   eMBInit(MB_RTU, 0x01, 0x01, 9600, MB_PAR_NONE); //初始化 RTU模式 从机地址为1 USART1 9600 无校验  
 	Air_Init();
+	 ADC1_Init();
   eMBEnable(); //启动FreeModbus 
   while(1)
 	{ 
 		eMBPoll(); 
 		Air_Poll();
+		ADC1_Poll(&usRegHoldingBuf[0]);
 	}
  }
 
