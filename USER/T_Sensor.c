@@ -79,7 +79,8 @@ GPIO_InitTypeDef GPIO_InitStructure;
 void ADC1_Poll(u16 *adc_tmp)
 {
 	int tmp;
-	tmp = (ADCConvertedValue -1080) *10/34; //need -1080*10/34
+	tmp = ((int)ADCConvertedValue -1080) *10/36; //need -1080*10/34
+	//tmp = ((int)900 -1080) *10/34; //need -1080*10/34
 	*adc_tmp = (u16)tmp;
 
 	
