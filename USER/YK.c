@@ -60,7 +60,7 @@ void Serial2_Init(void)
 
 void Enable_TxRx(void)
 {
-	u32 Delay_i = 80000;
+	u32 Delay_i = 600000;
 	 USART_ITConfig(USART2, USART_IT_RXNE, ENABLE);
  	 USART_ITConfig(USART2, USART_IT_TXE, ENABLE);
 	 do{
@@ -103,7 +103,7 @@ u8 Send_Air(u8 cmd,u8 DataH, u8 DataL)
 void Air_Init(void)
 {
 	u8 tmp_flag = 0;
-	usRegHoldingBuf[AIR_CMD_TYPE] = 0X00;	//000~999
+	usRegHoldingBuf[AIR_CMD_TYPE] = 85;	//000~999
 	usRegHoldingBuf[AIR_CMD_ONOFF] = 0Xff;	//0x00 off, 0xff on
 	usRegHoldingBuf[AIR_CMD_MODE] = 0X00;	//0x00 auto,0x01 cold,0x02 dehumidification,0x03 sendwind,0x04 warm
 	usRegHoldingBuf[AIR_CMD_TEMP] = 20; //0x10~0x1e ,16-31 degree
