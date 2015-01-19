@@ -100,6 +100,7 @@ u8 Send_Air(u8 cmd,u8 DataH, u8 DataL)
 	
 }
 
+u8 ee_temp[2];
 void Air_Init(void)
 {
 	u8 tmp_flag = 0;
@@ -115,6 +116,10 @@ void Air_Init(void)
 	if(tmp_flag == 0)
 		{
 			Air_Data[AIR_CMD_TYPE] = usRegHoldingBuf[AIR_CMD_TYPE];
+			ee_temp[0] = u8(Air_Data[AIR_CMD_TYPE]);
+			ee_temp[1] = u8(Air_Data[AIR_CMD_TYPE]>>8);
+			sEE_WriteBuffer(&ee_temp[0],AIR_CMD_TYPE,1);
+			sEE_WriteBuffer(&ee_temp[1],AIR_CMD_TYPE+1,1);
 		}
 	
 	tmp_flag = Send_Air(AIR_CMD_ONOFF,(u8)usRegHoldingBuf[AIR_CMD_ONOFF],0x08);
