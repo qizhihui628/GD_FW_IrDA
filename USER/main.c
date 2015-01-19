@@ -6,6 +6,7 @@
 #include "Led.h"
 #include "Timer2.h"
 #include "Switch.h"
+#include "eeprom.h"
 
 //输入寄存器起始地址
 #define REG_INPUT_START       0x0000
@@ -44,14 +45,20 @@ uint8_t ucRegCoilsBuf[REG_COILS_SIZE / 8] = {0x00,0x00};
 uint8_t ucRegDiscreteBuf[REG_DISCRETE_SIZE / 8] = {0x00,0x00};
  int main(void)
  {   
+ 	u8 eeaa;
+	u8 eeww = 2;
+	uint16_t nn = 1;
  	Switch_Init();
  	Serial2_Init();
   eMBInit(MB_RTU, Get_Address(), 0x01, 9600, MB_PAR_NONE); //初始化 RTU模式 从机地址为1 USART1 9600 无校验  
 	Air_Init();
-	 ADC1_Init();
-	 Led_Init();
-	 Timer2_Init();
-  eMBEnable(); //启动FreeModbus 
+	ADC1_Init();
+	Led_Init();
+	Timer2_Init();
+	sEE_Init();
+	sEE_WriteBuffer(&eeww,1,1);
+	sEE_ReadBuffer(&eeaa,(uint16_t)1,&nn);
+	eMBEnable(); //启动FreeModbus 
   while(1)
 	{ 
 		eMBPoll(); 
